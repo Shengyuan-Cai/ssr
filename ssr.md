@@ -1,3 +1,5 @@
+https://raw.githubusercontent.com/sdu-gyf/ssr/master/
+
 yum -y install wget
 
 chmod +x ssr.sh
