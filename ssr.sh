@@ -6,8 +6,8 @@ export PATH
 #	System Required: CentOS 6+/Debian 6+/Ubuntu 14.04+
 #	Description: Install the ShadowsocksR server
 #	Version: 2.0.38
-#	Author: Toyo
-#	Blog: https://doub.io/ss-jc42/
+#	Author: SDU-GYF
+#	Blog:www.sdugyf.cn
 #=================================================
 
 sh_ver="2.0.38"
@@ -144,7 +144,7 @@ urlsafe_base64(){
 ss_link_qr(){
 	SSbase64=$(urlsafe_base64 "${method}:${password}@${ip}:${port}")
 	SSurl="ss://${SSbase64}"
-	SSQRcode="https://vien.tech/qrcode?base64=${SSurl}"
+	SSQRcode="http://doub.pw/qr/qr.php?text=${SSurl}"
 	ss_link=" SS    链接 : ${Green_font_prefix}${SSurl}${Font_color_suffix} \n SS  二维码 : ${Green_font_prefix}${SSQRcode}${Font_color_suffix}"
 }
 ssr_link_qr(){
@@ -153,7 +153,7 @@ ssr_link_qr(){
 	SSRPWDbase64=$(urlsafe_base64 "${password}")
 	SSRbase64=$(urlsafe_base64 "${ip}:${port}:${SSRprotocol}:${method}:${SSRobfs}:${SSRPWDbase64}")
 	SSRurl="ssr://${SSRbase64}"
-	SSRQRcode="https://vien.tech/qrcode?base64=${SSRurl}"
+	SSRQRcode="http://doub.pw/qr/qr.php?text=${SSRurl}"
 	ssr_link=" SSR   链接 : ${Red_font_prefix}${SSRurl}${Font_color_suffix} \n SSR 二维码 : ${Red_font_prefix}${SSRQRcode}${Font_color_suffix} \n "
 }
 ss_ssr_determine(){
@@ -210,9 +210,8 @@ View_User(){
 		echo -e "${ss_link}"
 		echo -e "${ssr_link}"
 		echo -e " ${Green_font_prefix} 提示: ${Font_color_suffix}
-在浏览器中，打开二维码链接，就可以看到二维码图片。
-协议和混淆后面的[ _compatible ]，指的是 兼容原版协议/混淆。
-接下来客户端下载和配置请参考：https://vien.tech/article/122"
+ 在浏览器中，打开二维码链接，就可以看到二维码图片。
+ 协议和混淆后面的[ _compatible ]，指的是 兼容原版协议/混淆。"
 		echo && echo "==================================================="
 	else
 		user_total=`${jq_file} '.port_password' ${config_user_file} | sed '$d' | sed "1d" | wc -l`
@@ -238,16 +237,10 @@ View_User(){
 			echo -e "${ssr_link}"
 		done
 		echo -e " ${Green_font_prefix} 提示: ${Font_color_suffix}
-在浏览器中，打开二维码链接，就可以看到二维码图片。
-协议和混淆后面的[ _compatible ]，指的是 兼容原版协议/混淆。
-接下来客户端下载和配置请参考：https://vien.tech/article/122"
+ 在浏览器中，打开二维码链接，就可以看到二维码图片。
+ 协议和混淆后面的[ _compatible ]，指的是 兼容原版协议/混淆。"
 		echo && echo "==================================================="
 	fi
-	echo -e "vultr限时注册送50刀：https://vien.tech/article/114"
-	echo -e "outline搭建vpn教程：https://vien.tech/article/93"
-	echo -e "更多文章：https://vien.tech"
-	echo -e "进入 https://vien.tech ，动动手指点个广告，举手之劳，博主就能吃上辣条！"
-	echo "==================================================="
 }
 # 设置 配置信息
 Set_config_port(){
@@ -271,8 +264,8 @@ Set_config_port(){
 }
 Set_config_password(){
 	echo "请输入要设置的ShadowsocksR账号 密码"
-	read -e -p "(默认: vien.tech):" ssr_password
-	[[ -z "${ssr_password}" ]] && ssr_password="vien.tech"
+	read -e -p "(默认: doub.io):" ssr_password
+	[[ -z "${ssr_password}" ]] && ssr_password="doub.io"
 	echo && echo ${Separator_1} && echo -e "	密码 : ${Green_font_prefix}${ssr_password}${Font_color_suffix}" && echo ${Separator_1} && echo
 }
 Set_config_method(){
@@ -280,23 +273,23 @@ Set_config_method(){
 	
  ${Green_font_prefix} 1.${Font_color_suffix} none
  ${Tip} 如果使用 auth_chain_a 协议，请加密方式选择 none，混淆随意(建议 plain)
- 
+
  ${Green_font_prefix} 2.${Font_color_suffix} rc4
  ${Green_font_prefix} 3.${Font_color_suffix} rc4-md5
  ${Green_font_prefix} 4.${Font_color_suffix} rc4-md5-6
- 
+
  ${Green_font_prefix} 5.${Font_color_suffix} aes-128-ctr
  ${Green_font_prefix} 6.${Font_color_suffix} aes-192-ctr
  ${Green_font_prefix} 7.${Font_color_suffix} aes-256-ctr
- 
+
  ${Green_font_prefix} 8.${Font_color_suffix} aes-128-cfb
  ${Green_font_prefix} 9.${Font_color_suffix} aes-192-cfb
  ${Green_font_prefix}10.${Font_color_suffix} aes-256-cfb
- 
+
  ${Green_font_prefix}11.${Font_color_suffix} aes-128-cfb8
  ${Green_font_prefix}12.${Font_color_suffix} aes-192-cfb8
  ${Green_font_prefix}13.${Font_color_suffix} aes-256-cfb8
- 
+
  ${Green_font_prefix}14.${Font_color_suffix} salsa20
  ${Green_font_prefix}15.${Font_color_suffix} chacha20
  ${Green_font_prefix}16.${Font_color_suffix} chacha20-ietf
@@ -544,7 +537,7 @@ Write_configuration(){
     "obfs_param": "",
     "speed_limit_per_con": ${ssr_speed_limit_per_con},
     "speed_limit_per_user": ${ssr_speed_limit_per_user},
-
+    
     "additional_ports" : {},
     "timeout": 120,
     "udp_timeout": 60,
@@ -573,7 +566,7 @@ Write_configuration_many(){
     "obfs_param": "",
     "speed_limit_per_con": ${ssr_speed_limit_per_con},
     "speed_limit_per_user": ${ssr_speed_limit_per_user},
-
+    
     "additional_ports" : {},
     "timeout": 120,
     "udp_timeout": 60,
@@ -1196,7 +1189,7 @@ Configure_Server_Speeder(){
  ${Green_font_prefix}4.${Font_color_suffix} 停止 锐速
  ${Green_font_prefix}5.${Font_color_suffix} 重启 锐速
  ${Green_font_prefix}6.${Font_color_suffix} 查看 锐速 状态
- 
+
  注意： 锐速和LotServer不能同时安装/启动！" && echo
 	read -e -p "(默认: 取消):" server_speeder_num
 	[[ -z "${server_speeder_num}" ]] && echo "已取消..." && exit 1
@@ -1261,7 +1254,7 @@ Configure_LotServer(){
  ${Green_font_prefix}4.${Font_color_suffix} 停止 LotServer
  ${Green_font_prefix}5.${Font_color_suffix} 重启 LotServer
  ${Green_font_prefix}6.${Font_color_suffix} 查看 LotServer 状态
- 
+
  注意： 锐速和LotServer不能同时安装/启动！" && echo
 	read -e -p "(默认: 取消):" lotserver_num
 	[[ -z "${lotserver_num}" ]] && echo "已取消..." && exit 1
